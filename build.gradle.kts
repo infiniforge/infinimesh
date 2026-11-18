@@ -6,8 +6,8 @@ android {
         applicationId = "com.infinimesh"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "0.1.2"
+        versionCode = 4
+        versionName = "0.1.3"
     }
     packaging { resources.merges += "META-INF/services/io.github.gretchycat.infinistream.CapabilityProvider" }
     compileOptions {
@@ -16,6 +16,6 @@ android {
     }
 }
 dependencies {
-    implementation("io.github.gretchycat.libinfinemesh:mesh-android:0.2.0")
+    implementation("io.github.gretchycat.libinfinemesh:mesh-android:0.2.1")
     implementation("io.github.gretchycat.libinfiniselect:select-android:0.1.0")
 }

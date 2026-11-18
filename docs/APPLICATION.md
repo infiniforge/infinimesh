@@ -59,8 +59,11 @@ Semicolon and parenthesized comments, compact words, N line numbers and trailing
 checksums are accepted. Checksums are stripped, not validated. Arc tessellation
 uses at most 2 degrees or 1 mm of arc per segment. Unknown G/M/T codes, non-XY-plane commands and firmware macros are skipped with
 a warning. Their parameters do not change the current position or feedrate; later
-supported commands continue. Radius-form arcs and malformed supported commands
-still report a line-numbered error. Skipped machine-state changes can make this
+supported commands continue. Invalid text, malformed supported commands and
+unsupported radius-form arcs are skipped with a warning. A skipped block retains
+no partial position, feedrate, mode, origin-offset or toolpath changes; later valid
+blocks continue. Cancellation and resource limits still stop loading. Files with
+no previewable motion report that no motion was found. Skipped machine-state changes can make this
 preview differ from the machine path.
 
 The timeline includes constant-feed motion, retraction and dwell; it omits
