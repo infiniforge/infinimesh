@@ -1,4 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
     <application android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:label="InfiniMesh" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true" android:theme="@style/InfiniMeshTheme">
         <activity android:name=".MeshActivity" android:exported="true" android:launchMode="singleTop"
@@ -43,66 +43,78 @@
                 <data android:mimeType="application/binary" />
                 <data android:mimeType="application/x-unknown" />
                 <data android:mimeType="text/plain" />
-                <data android:pathPattern=".*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\..*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.NGC" android:pathSuffix=".NGC" />
+                <data android:pathPattern=".*\\.stl" />
+                <data android:pathSuffix=".stl" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.stl" />
+                <data android:pathPattern=".*\\..*\\..*\\.stl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.stl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.stl" />
+                <data android:pathPattern=".*\\.STL" />
+                <data android:pathSuffix=".STL" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.STL" />
+                <data android:pathPattern=".*\\..*\\..*\\.STL" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.STL" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.STL" />
+                <data android:pathPattern=".*\\.gcode" />
+                <data android:pathSuffix=".gcode" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\..*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\.GCODE" />
+                <data android:pathSuffix=".GCODE" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\..*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\.gco" />
+                <data android:pathSuffix=".gco" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.gco" />
+                <data android:pathPattern=".*\\..*\\..*\\.gco" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gco" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gco" />
+                <data android:pathPattern=".*\\.GCO" />
+                <data android:pathSuffix=".GCO" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\..*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\.gc" />
+                <data android:pathSuffix=".gc" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.gc" />
+                <data android:pathPattern=".*\\..*\\..*\\.gc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gc" />
+                <data android:pathPattern=".*\\.GC" />
+                <data android:pathSuffix=".GC" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.GC" />
+                <data android:pathPattern=".*\\..*\\..*\\.GC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.GC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GC" />
+                <data android:pathPattern=".*\\.g" />
+                <data android:pathSuffix=".g" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.g" />
+                <data android:pathPattern=".*\\..*\\..*\\.g" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.g" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.g" />
+                <data android:pathPattern=".*\\.G" />
+                <data android:pathSuffix=".G" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.G" />
+                <data android:pathPattern=".*\\..*\\..*\\.G" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.G" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.G" />
+                <data android:pathPattern=".*\\.ngc" />
+                <data android:pathSuffix=".ngc" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\..*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\.NGC" />
+                <data android:pathSuffix=".NGC" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.NGC" />
+                <data android:pathPattern=".*\\..*\\..*\\.NGC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.NGC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.NGC" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -111,66 +123,78 @@
                 <data android:scheme="content" />
                 <data android:scheme="file" />
                 <data android:host="*" />
-                <data android:pathPattern=".*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.stl" android:pathSuffix=".stl" />
-                <data android:pathPattern=".*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.STL" android:pathSuffix=".STL" />
-                <data android:pathPattern=".*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gcode" android:pathSuffix=".gcode" />
-                <data android:pathPattern=".*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCODE" android:pathSuffix=".GCODE" />
-                <data android:pathPattern=".*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gco" android:pathSuffix=".gco" />
-                <data android:pathPattern=".*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCO" android:pathSuffix=".GCO" />
-                <data android:pathPattern=".*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gc" android:pathSuffix=".gc" />
-                <data android:pathPattern=".*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GC" android:pathSuffix=".GC" />
-                <data android:pathPattern=".*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.g" android:pathSuffix=".g" />
-                <data android:pathPattern=".*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.G" android:pathSuffix=".G" />
-                <data android:pathPattern=".*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.ngc" android:pathSuffix=".ngc" />
-                <data android:pathPattern=".*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\..*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.NGC" android:pathSuffix=".NGC" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.NGC" android:pathSuffix=".NGC" />
+                <data android:pathPattern=".*\\.stl" />
+                <data android:pathSuffix=".stl" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.stl" />
+                <data android:pathPattern=".*\\..*\\..*\\.stl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.stl" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.stl" />
+                <data android:pathPattern=".*\\.STL" />
+                <data android:pathSuffix=".STL" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.STL" />
+                <data android:pathPattern=".*\\..*\\..*\\.STL" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.STL" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.STL" />
+                <data android:pathPattern=".*\\.gcode" />
+                <data android:pathSuffix=".gcode" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\..*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gcode" />
+                <data android:pathPattern=".*\\.GCODE" />
+                <data android:pathSuffix=".GCODE" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\..*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCODE" />
+                <data android:pathPattern=".*\\.gco" />
+                <data android:pathSuffix=".gco" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.gco" />
+                <data android:pathPattern=".*\\..*\\..*\\.gco" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gco" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gco" />
+                <data android:pathPattern=".*\\.GCO" />
+                <data android:pathSuffix=".GCO" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\..*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GCO" />
+                <data android:pathPattern=".*\\.gc" />
+                <data android:pathSuffix=".gc" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.gc" />
+                <data android:pathPattern=".*\\..*\\..*\\.gc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.gc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.gc" />
+                <data android:pathPattern=".*\\.GC" />
+                <data android:pathSuffix=".GC" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.GC" />
+                <data android:pathPattern=".*\\..*\\..*\\.GC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.GC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.GC" />
+                <data android:pathPattern=".*\\.g" />
+                <data android:pathSuffix=".g" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.g" />
+                <data android:pathPattern=".*\\..*\\..*\\.g" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.g" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.g" />
+                <data android:pathPattern=".*\\.G" />
+                <data android:pathSuffix=".G" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.G" />
+                <data android:pathPattern=".*\\..*\\..*\\.G" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.G" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.G" />
+                <data android:pathPattern=".*\\.ngc" />
+                <data android:pathSuffix=".ngc" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\..*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.ngc" />
+                <data android:pathPattern=".*\\.NGC" />
+                <data android:pathSuffix=".NGC" tools:targetApi="31" />
+                <data android:pathPattern=".*\\..*\\.NGC" />
+                <data android:pathPattern=".*\\..*\\..*\\.NGC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\.NGC" />
+                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.NGC" />
             </intent-filter>
         </activity>
     </application>
