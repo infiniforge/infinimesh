@@ -1,0 +1,9 @@
+{
+  "directory": "libraries",
+  "repositories": {
+    "libinfinemesh": {
+      "url": "https://github.com/infiniforge/libinfinemesh.git",
+      "commit": "5cd687fff18aa5f936c97a0c94b63d4d9844db14"
+    }
+  }
+}
