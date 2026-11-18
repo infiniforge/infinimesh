@@ -4,6 +4,10 @@ Checked 2026-11-18 with JDK 21 on Termux, Android SDK platform 36/build tools
 35.0.0 and the system aapt2.
 
 - Debug APK assembled; application ID `com.infinimesh`, version 0.1.0, API 26 minimum.
+- A fresh public recursive clone of app commit `83eeb3b`, with library commit
+  `5cd687f`, passed `./build.sh --offline --max-workers=1 --console=plain`: all 85
+  tasks executed, including APK assembly, lint and all 17 tests. Only the clone
+  and documented SDK/toolchain/cache were used; no sibling app or build output.
 - App Android lint passed with zero errors and one OldTargetApi advisory because
   target SDK 35 matches the existing suite baseline.
 - Standalone library tests: 17 passed, covering ASCII/binary STL, binary `solid`
