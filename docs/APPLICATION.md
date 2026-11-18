@@ -57,9 +57,11 @@ E zero, millimeters, absolute positioning and 1200 mm/min as initial assumptions
 
 Semicolon and parenthesized comments, compact words, N line numbers and trailing
 checksums are accepted. Checksums are stripped, not validated. Arc tessellation
-uses at most 2 degrees or 1 mm of arc per segment. Radius-form arcs, non-XY planes,
-multi-tool paths and unknown G/M commands fail with a line-numbered error rather
-than silently omitting motion. Future dialects should be explicit decoders.
+uses at most 2 degrees or 1 mm of arc per segment. Unknown G/M/T codes, non-XY-plane commands and firmware macros are skipped with
+a warning. Their parameters do not change the current position or feedrate; later
+supported commands continue. Radius-form arcs and malformed supported commands
+still report a line-numbered error. Skipped machine-state changes can make this
+preview differ from the machine path.
 
 The timeline includes constant-feed motion, retraction and dwell; it omits
 acceleration, jerk, heating waits, leveling, firmware transforms, volumetric
@@ -90,3 +92,13 @@ Future work: additional format decoder modules, indexed scene geometry, material
 UV coordinates and texture resources, then texture rendering. No texture support
 is claimed by the initial triangle/toolpath API. A decoder registry separates
 format selection from the application and leaves room for these additions.
+
+
+InfiniFolder links libinfinemesh for STL and G-code thumbnails and seeds InfiniMesh
+as their companion viewer when installed. The handoff carries a read-only relay,
+the authoritative source identity, and display metadata through libinfiniselect.
+The viewer remains independently installable. Android VIEW/SEND registrations
+cover STL/G-code MIME aliases. Extension-scoped VIEW filters also accept named
+`.stl`, `.gcode`, `.gco`, `.gc`, `.g` and `.ngc` paths reported as generic binary or
+plain text, including uppercase suffixes. Opaque provider paths without a suffix
+need a specific MIME or the explicit InfiniFolder handoff.

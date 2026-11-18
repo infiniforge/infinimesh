@@ -4,3 +4,6 @@
 [submodule "libraries/libinfiniselect"]
 	path = libraries/libinfiniselect
 	url = https://github.com/infiniforge/libinfiniselect.git
+[submodule "libraries/libinfinistream"]
+	path = libraries/libinfinistream
+	url = https://github.com/infiniforge/libinfinistream.git

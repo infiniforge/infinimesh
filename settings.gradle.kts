@@ -9,5 +9,8 @@ dependencyResolutionManagement {
     repositories { google(); mavenCentral() }
 }
 rootProject.name = "InfiniMesh"
+val dependencyRoot = file("libraries")
+System.setProperty("infini.dependencies", dependencyRoot.canonicalPath)
+includeBuild("libraries/libinfinistream")
 includeBuild("libraries/libinfinemesh")
 includeBuild("libraries/libinfiniselect")

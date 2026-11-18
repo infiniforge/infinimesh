@@ -1,7 +1,7 @@
 # InfiniMesh
 
 Standalone, read-only Android 3D model and toolpath viewer in the InfiniForge family.
-Version **0.1.1**. The shared backend is **libinfinemesh** (the library name is intentional).
+Version **0.1.2**. The shared backend is **libinfinemesh** (the library name is intentional).
 
 - ASCII and binary STL, including binary headers beginning with `solid`.
 - Flat shading by default, with mesh/wireframe and Gouraud shading available.

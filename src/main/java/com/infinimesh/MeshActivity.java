@@ -147,7 +147,7 @@ public final class MeshActivity extends Activity {
     private void open() {
         // Wildcard MIME keeps generically labelled STL/G-code available in the SAF fallback.
         OpenRequest request=new OpenRequest("infinimesh","InfiniMesh",Collections.singletonList("*/*"),
-            false,null,Arrays.asList("stl","gcode","gco","gc","g"),false,0,
+            false,null,Arrays.asList("stl","gcode","gco","gc","g","ngc"),false,0,
             MultipleSelectionDelivery.ITEM_URIS,SelectionMetadataFormat.NONE,false,null,false,null);
         try { InfiniSelect.INSTANCE.open(this,request,OPEN); }
         catch(ActivityNotFoundException e) { error("No file selection source is available."); }
