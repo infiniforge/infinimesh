@@ -1,3 +1,6 @@
 [submodule "libraries/libinfinemesh"]
 	path = libraries/libinfinemesh
 	url = https://github.com/infiniforge/libinfinemesh.git
+[submodule "libraries/libinfiniselect"]
+	path = libraries/libinfiniselect
+	url = https://github.com/infiniforge/libinfiniselect.git

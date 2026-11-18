@@ -2,21 +2,29 @@
 
 ## Viewing
 
-Open uses Android SAF with all file types so providers with generic MIME types can
-still supply STL/G-code. Open with and Share register STL and G-code MIME types;
+Open calls libinfiniselect with read-only, single-file selection. The library
+uses the optional InfiniFolder picker and its Android SAF/source fallback. MIME
+is unrestricted so generically labelled STL/G-code remains selectable. Open with and Share register STL and G-code MIME types;
 providers labeling files as generic octet-stream or text may require opening from
 inside the app. Input content is opened read-only. No broad filesystem permission,
 write path, file replacement or network/printer control exists.
 
-The selected surface mode is mesh/wireframe, flat lighting, or Gouraud vertex
-lighting. Normals are computed from triangle winding; Gouraud normals are area
+Flat lighting is the default. The first upgrade to 0.1.1 selects flat once
+because the initial release persisted its startup Gouraud selection; later manual
+shading choices are remembered. Surface modes are mesh/wireframe, flat lighting,
+and Gouraud vertex lighting. Normals are computed from triangle winding; Gouraud normals are area
 weighted at exactly coincident vertex positions, with no crease-angle threshold.
-The ground grid is a visual reference scaled to the bounds, not a calibrated ruler.
+The renderer prefers 24-bit depth, with a 16-bit fallback, and fits clipping planes
+to the rotated scene bounds to distinguish closely spaced faces. Exactly coplanar
+overlapping geometry can still compete for depth. The ground grid is a visual
+reference scaled to the bounds, not a calibrated ruler.
 STL is unitless. Source bounds and triangle counts appear under the viewer.
 A drag changes yaw and pitch; pinch and +/- change zoom. Reset rotation restores
 the default isometric view while Fit resets zoom. Orientation changes retain the
 loaded scene and camera. Full activity/process recreation reopens the saved URI
-when its grant remains available, restores preview time and fits the camera.
+through libinfiniselect using the saved authoritative identity and current access
+URI; expired relays can be refreshed when the provider remains available. It
+restores preview time and fits the camera.
 Persistent settings own only colors, shading, grid visibility and travel visibility.
 
 ## STL
@@ -58,7 +66,10 @@ acceleration, jerk, heating waits, leveling, firmware transforms, volumetric
 extrusion, filament widths, machine limits and actual homing geometry. G0 uses
 the current feedrate. Travel is gray, positive-E G1/G2/G3 motion uses the configured
 model color, and the head is amber. Toolpaths stay lines in all surface shading
-modes. Playback starts at the complete path; Play restarts at zero when at the end.
+modes. Playback starts at the complete path; **Simulate** starts at zero when at the end
+and resumes a paused preview otherwise. The status shows the active segment,
+extrusion versus travel/wait, and interpolated XYZ position in millimeters.
+**Full path** pauses and reveals the complete path; **Restart** pauses at zero.
 The app pauses when backgrounded. Details lists all preview assumptions.
 
 Command interpretation follows the [Marlin linear move](https://marlinfw.org/docs/gcode/G000-G001.html),

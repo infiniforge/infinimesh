@@ -1,6 +1,11 @@
 <resources>
-    <string name="play">Play</string>
+    <string name="simulate">Simulate</string>
     <string name="pause">Pause</string>
     <string name="loading">Loading model…</string>
     <string name="preview_time">Preview %1$s / %2$s · travel gray · head amber</string>
+    <string name="complete">Complete</string>
+    <string name="extrusion">Extrusion</string>
+    <string name="travel_wait">Travel / wait</string>
+    <string name="preview_display">%1$s\n%2$s</string>
+    <string name="preview_position">Segment %1$d/%2$d · %3$s · X %4$.2f Y %5$.2f Z %6$.2f mm</string>
 </resources>

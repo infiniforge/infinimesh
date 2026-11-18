@@ -3,7 +3,11 @@
   "repositories": {
     "libinfinemesh": {
       "url": "https://github.com/infiniforge/libinfinemesh.git",
-      "commit": "5cd687fff18aa5f936c97a0c94b63d4d9844db14"
+      "commit": "21df32c8bdacded39b0a548a985acca855bd77e4"
+    },
+    "libinfiniselect": {
+      "url": "https://github.com/infiniforge/libinfiniselect.git",
+      "commit": "bef55c7c650b472b6e275088de684f83a4b064e0"
     }
   }
 }

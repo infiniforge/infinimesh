@@ -1,16 +1,18 @@
 # InfiniMesh
 
 Standalone, read-only Android 3D model and toolpath viewer in the InfiniForge family.
-Version **0.1.0**. The shared backend is **libinfinemesh** (the library name is intentional).
+Version **0.1.1**. The shared backend is **libinfinemesh** (the library name is intentional).
 
 - ASCII and binary STL, including binary headers beginning with `solid`.
-- Mesh/wireframe, flat shading and Gouraud shading for surface models.
+- Flat shading by default, with mesh/wireframe and Gouraud shading available.
 - Drag rotation, pinch zoom, zoom buttons, reset rotation, and fit/reset zoom.
 - Optional ground grid and persistent default background and untextured model colors.
 - G-code travel/extrusion preview with a moving head, play/pause/restart, timeline
-  scrubbing and 1×/10×/60×/300× playback. Timing is an approximation.
-- Android document picker, Open with and single-file Share; no storage permission
-  or companion application required. Infinifolder can supply granted content URIs.
+  scrubbing and 1×/10×/60×/300× playback, full-path inspection and live segment/XYZ
+  status. Timing is an approximation.
+- File opening through libinfiniselect: optional InfiniFolder picker with Android
+  SAF fallback, Open with and single-file Share. Access handles and durable source
+  identities stay separate; no storage permission or companion app is required.
 - Built-in cube and spiral samples under the options menu.
 
 This application only views files. Other model formats, texture mapping, material
@@ -48,4 +50,6 @@ cd libraries/libinfinemesh
 ```
 
 [Documentation](docs/README.md) · [Architecture](docs/architecture.md) ·
-[MIT license](LICENSE.md). The launcher cube and samples are original project assets.
+[MIT license](LICENSE.md). The mesh icon base and samples are original project assets; the icon uses the
+shared suite infinity emblem and InfiniFolder compositor. See
+[artwork provenance and regeneration](artwork/README.md).

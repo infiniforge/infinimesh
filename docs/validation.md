@@ -1,5 +1,31 @@
 # Validation
 
+## 0.1.1
+
+Checked 2026-11-18 on the same toolchain below.
+
+- Debug APK assembly and app lint passed (zero errors; advisory warnings for the
+  target SDK, pinned AGP and intentionally retained suite foreground resources).
+- 25 JVM tests passed: 17 mesh/STL/G-code, 3 camera/depth and 5 selection-contract.
+- Mesh library AAR and its lint passed. Standalone libinfiniselect tests passed;
+  its separate lint task reports two pre-existing WrongConstant diagnostics in
+  persistable-grant calls. The pinned library source was not modified.
+- Native EGL/GLES2 regression reproduced the old depth collision and passed
+  with fitted clip planes on 16-bit and 24-bit depth renderbuffers. It uses the
+  actual viewer shaders and clip-range implementation.
+- Mesh base PNG and every generated launcher/foreground density retain alpha
+  from 0 to 255, with all four corner pixels transparent. The composited icon
+  was visually reviewed. Rebuilding artwork requires only this checkout.
+- Loading now compiles against pinned libinfiniselect APIs for selection,
+  metadata/grant handling, current/durable URI pairing, and worker-thread reads.
+
+No ADB device was connected. Handset acceptance still includes live Folder/SAF
+selection, expired-relay restoration, flat-default migration, close-face rendering
+on the handset GPU, and G-code controls with real input files. The first upgrade
+selects flat once; later manually chosen shading modes remain persistent.
+
+## Initial 0.1.0
+
 Checked 2026-11-18 with JDK 21 on Termux, Android SDK platform 36/build tools
 35.0.0 and the system aapt2.
 

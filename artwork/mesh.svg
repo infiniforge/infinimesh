@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="InfiniMesh transparent triangulated model base">
+  <title>InfiniMesh faceted model</title>
+  <desc>Three triangulated faces of an isometric solid. The canvas outside the model is transparent.</desc>
+  <defs>
+    <linearGradient id="top" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#f0fffc"/><stop offset=".55" stop-color="#b3e6e0"/><stop offset="1" stop-color="#68b1b4"/></linearGradient>
+    <linearGradient id="left" x1="0" y1="0" x2="1" y2=".7"><stop stop-color="#8bbabd"/><stop offset=".5" stop-color="#3e777f"/><stop offset="1" stop-color="#21464f"/></linearGradient>
+    <linearGradient id="right" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#b7e4de"/><stop offset=".5" stop-color="#619f9f"/><stop offset="1" stop-color="#315f6b"/></linearGradient>
+  </defs>
+  <g stroke="#122b37" stroke-width="8" stroke-linejoin="round">
+    <path d="M256 34L440 142L256 250L72 142Z" fill="url(#top)"/>
+    <path d="M72 142L256 250V478L72 370Z" fill="url(#left)"/>
+    <path d="M256 250L440 142V370L256 478Z" fill="url(#right)"/>
+  </g>
+  <g stroke="#173e49" stroke-width="4" stroke-linejoin="round">
+    <path d="M256 34L256 250L72 142Z" fill="#e1f8f1" fill-opacity=".45"/>
+    <path d="M72 142L256 364L72 370Z" fill="#7db2b6" fill-opacity=".4"/>
+    <path d="M256 364L256 478L72 370Z" fill="#234f5b" fill-opacity=".55"/>
+    <path d="M440 142L256 364L440 370Z" fill="#93cdca" fill-opacity=".48"/>
+    <path d="M256 364L440 370L256 478Z" fill="#326779" fill-opacity=".65"/>
+    <path d="M256 250L256 364M72 142L256 364L440 142" fill="none"/>
+  </g>
+  <path d="M256 48L422 145M84 152V360M268 465L428 371" fill="none" stroke="#e7fffa" stroke-width="4" stroke-opacity=".62" stroke-linecap="round"/>
+</svg>

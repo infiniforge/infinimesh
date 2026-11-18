@@ -11,9 +11,12 @@ import android.view.*;
 import android.widget.*;
 import java.io.*;
 import java.util.Locale;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.*;
 import io.github.gretchycat.infinemesh.*;
 import io.github.gretchycat.infinemesh.android.MeshView;
+import io.github.gretchycat.infiniselect.*;
 
 public final class MeshActivity extends Activity {
     private static final int OPEN=100;
@@ -28,8 +31,25 @@ public final class MeshActivity extends Activity {
     private Future<?> pending;
     private int generation;
     private ModelDocument document;
-    private String documentName="",location;
+    private String documentName="";
+    private ModelSource source;
+    /** Current read grants and durable identity remain paired across activity restoration. */
+    private record ModelSource(String authoritative, String content, String name, String mime, boolean sample) {
+        static ModelSource sample(String name) { return new ModelSource("sample:"+name,null,name,null,true); }
+        void save(Bundle out) {
+            out.putString("location",authoritative);out.putString("accessUri",content);
+            out.putString("sourceName",name);out.putString("sourceMime",mime);out.putBoolean("sample",sample);
+        }
+        static ModelSource restore(Bundle saved) {
+            String location=saved.getString("location");
+            if(location!=null && location.startsWith("sample:") &&
+                (saved.getBoolean("sample",false) || !saved.containsKey("sample"))) return sample(location.substring(7));
+            return new ModelSource(location,saved.getString("accessUri",location),saved.getString("sourceName"),saved.getString("sourceMime"),false);
+        }
+    }
+    private interface SourceRequest { ModelSource read() throws Exception; }
     private boolean playing,updatingSeek,destroyed;
+    private boolean[] simulationExtrusion;
     private double seconds,speed=10;
     private long lastTick;
     private final Runnable tick=new Runnable() {
@@ -43,6 +63,10 @@ public final class MeshActivity extends Activity {
     };
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);prefs=getSharedPreferences("viewer",MODE_PRIVATE);
+        // The first release persisted its startup selection, so migrate that default once.
+        if(!prefs.getBoolean("flatDefaultApplied",false)) {
+            prefs.edit().putInt("shading",1).putBoolean("flatDefaultApplied",true).apply();
+        }
         LinearLayout root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(dp(6),0,dp(6),0);
         setContentView(root);
@@ -66,7 +90,7 @@ public final class MeshActivity extends Activity {
         button(resets,"−",()->viewer.zoomBy(0.8f)).setContentDescription("Zoom out");
         button(resets,"+",()->viewer.zoomBy(1.25f)).setContentDescription("Zoom in");
         viewer=new MeshView(this);root.addView(viewer,new LinearLayout.LayoutParams(-1,0,1));
-        int mode=Math.max(0,Math.min(2,prefs.getInt("shading",2)));shading.setSelection(mode);
+        int mode=Math.max(0,Math.min(2,prefs.getInt("shading",1)));shading.setSelection(mode);
         viewer.setShading(MeshView.Shading.values()[mode]);
         shading.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -91,7 +115,10 @@ public final class MeshActivity extends Activity {
         });
         LinearLayout transport=row(playback);
         button(transport,"Restart",()->{pause();seconds=0;updateTime();});
-        play=button(transport,"Play",()->{
+        button(transport,"Full path",()-> {
+            if(document!=null && document.toolpath!=null) { pause();seconds=document.toolpath.durationSeconds();updateTime(); }
+        });
+        play=button(transport,"Simulate",()->{
             if(playing) pause(); else {
                 if(document==null || document.toolpath==null) return;
                 if(seconds>=document.toolpath.durationSeconds()) seconds=0;
@@ -106,7 +133,7 @@ public final class MeshActivity extends Activity {
             public void onItemSelected(AdapterView<?> p,View v,int i,long id) { speed=new double[]{1,10,60,300}[i]; }
         });
         playback.setVisibility(View.GONE);
-        if(saved!=null && saved.getString("location")!=null) load(saved.getString("location"),saved.getDouble("seconds",-1));
+        if(saved!=null && saved.getString("location")!=null) load(()->ModelSource.restore(saved),saved.getDouble("seconds",-1));
         else incoming(getIntent());
     }
     private LinearLayout row(LinearLayout parent) {
@@ -118,46 +145,82 @@ public final class MeshActivity extends Activity {
     }
     private int dp(int value) { return Math.round(value*getResources().getDisplayMetrics().density); }
     private void open() {
-        Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("*/*").addCategory(Intent.CATEGORY_OPENABLE);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-        try { startActivityForResult(intent,OPEN); } catch(ActivityNotFoundException e) { error("No Android document picker is available."); }
+        // Wildcard MIME keeps generically labelled STL/G-code available in the SAF fallback.
+        OpenRequest request=new OpenRequest("infinimesh","InfiniMesh",Collections.singletonList("*/*"),
+            false,null,Arrays.asList("stl","gcode","gco","gc","g"),false,0,
+            MultipleSelectionDelivery.ITEM_URIS,SelectionMetadataFormat.NONE,false,null,false,null);
+        try { InfiniSelect.INSTANCE.open(this,request,OPEN); }
+        catch(ActivityNotFoundException e) { error("No file selection source is available."); }
     }
     @Override protected void onActivityResult(int request,int result,Intent data) {
         super.onActivityResult(request,result,data);
-        if(request==OPEN && result==RESULT_OK && data!=null && data.getData()!=null) {
-            Uri uri=data.getData();
-            if ((data.getFlags() & Intent.FLAG_GRANT_READ_URI_PERMISSION) != 0) {
-                try { getContentResolver().takePersistableUriPermission(uri,Intent.FLAG_GRANT_READ_URI_PERMISSION); } catch(SecurityException ignored) {}
-            }
-            load(uri.toString(),-1);
+        if(request==OPEN && result==RESULT_OK && data!=null) {
+            Intent selection=new Intent(data);
+            load(()-> {
+                StorageAccess.INSTANCE.persist(this,selection);
+                SelectionResult selected=InfiniSelect.INSTANCE.readResult(this,selection);
+                if(selected.isNewFile() || selected.getItems().isEmpty()) throw new IOException("No model file was selected");
+                SelectionItem item=selected.getItems().get(0);
+                return new ModelSource(item.getAuthoritativeUri().toString(),item.getContentUri().toString(),item.getName(),item.getMimeType(),false);
+            },-1);
         }
     }
     @Override protected void onNewIntent(Intent intent) { super.onNewIntent(intent);setIntent(intent);incoming(intent); }
     private void incoming(Intent intent) {
         if(intent==null) return;
         Uri uri=intent.getData();
-        if(Intent.ACTION_SEND.equals(intent.getAction())) uri=intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        if(Intent.ACTION_SEND.equals(intent.getAction())) {
+            Uri stream=intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if(stream!=null) uri=stream;
+        }
         if(uri==null && intent.getClipData()!=null && intent.getClipData().getItemCount()>0) uri=intent.getClipData().getItemAt(0).getUri();
-        if(uri!=null) load(uri.toString(),-1);
+        if(uri==null) {
+            String supplied=intent.getStringExtra(FileSelectionContract.EXTRA_RESULT_CONTENT_URI);
+            if(supplied!=null) uri=Uri.parse(supplied);
+        }
+        if(uri==null) return;
+        String reference=intent.getStringExtra(FileSelectionContract.EXTRA_RESULT_AUTHORITATIVE_URI);
+        String name=intent.getStringExtra(FileSelectionContract.EXTRA_RESULT_NAME);
+        String mime=intent.getStringExtra(FileSelectionContract.EXTRA_RESULT_MIME);
+        ModelSource incoming=new ModelSource(reference,uri.toString(),name,mime==null?intent.getType():mime,false);
+        Intent handoff=new Intent(intent).setData(uri);
+        load(()-> { StorageAccess.INSTANCE.persist(this,handoff); return incoming; },-1);
     }
-    private void load(String source,double resumeSeconds) {
+    private void load(String sample,double resumeSeconds) {
+        if(!sample.startsWith("sample:")) throw new IllegalArgumentException("Expected bundled sample");
+        load(()->ModelSource.sample(sample.substring(7)),resumeSeconds);
+    }
+    private void load(SourceRequest request,double resumeSeconds) {
         pause();int ticket=++generation;if(pending!=null) pending.cancel(true);
         info.setText(R.string.loading);
         pending=loader.submit(()-> {
             try {
-                boolean sample=source.startsWith("sample:");Uri uri=sample?null:Uri.parse(source);
-                String name=sample?source.substring(7):displayName(uri);
-                String mime=sample?"":getContentResolver().getType(uri);
+                ModelSource requested=request.read();
+                ModelSource opened;
+                Uri access=null;
+                String name,mime;
+                if(requested.sample()) {
+                    opened=requested;name=requested.name();mime="";
+                } else {
+                    ResolvedSource resolved=InfiniSelect.INSTANCE.requireSelectedSource(this,
+                        requested.content()==null?null:Uri.parse(requested.content()),requested.authoritative(),requested.name(),requested.mime(),null);
+                    access=resolved.getContentUri();
+                    name=resolved.getDisplayName();
+                    if(name==null || name.isEmpty()) name=displayName(access);
+                    mime=resolved.getMimeType();
+                    if(mime==null || mime.isEmpty() || mime.equals("*/*")) mime=getContentResolver().getType(access);
+                    opened=new ModelSource(resolved.getAuthoritativeUri().toString(),access.toString(),name,mime,false);
+                }
                 ModelDocument loaded;
-                try(InputStream input=sample?getAssets().open("samples/"+name):getContentResolver().openInputStream(uri)) {
-                    if(input==null) throw new IOException("The document provider returned no data");
+                try(InputStream input=requested.sample()?getAssets().open("samples/"+name):StorageAccess.INSTANCE.openRead(this,access)) {
                     loaded=new ModelLoader().load(input,name,mime,DecodeLimits.DEFAULT);
                 }
                 if(Thread.currentThread().isInterrupted()) return;
                 viewer.setDocument(loaded);
                 runOnUiThread(()-> {
                     if(destroyed || generation!=ticket) return;
-                    document=loaded;documentName=name;location=source;
+                    document=loaded;documentName=opened.name();source=opened;
+                    simulationExtrusion=loaded.toolpath==null?null:loaded.toolpath.extrusion();
                     seconds=loaded.toolpath==null?0:(resumeSeconds>=0?Math.min(resumeSeconds,loaded.toolpath.durationSeconds()):loaded.toolpath.durationSeconds());
                     playback.setVisibility(loaded.toolpath==null?View.GONE:View.VISIBLE);
                     info.setText(summary());updateTime();
@@ -187,10 +250,15 @@ public final class MeshActivity extends Activity {
         if(document==null || document.toolpath==null) return;
         double duration=document.toolpath.durationSeconds();viewer.setPreviewSeconds(seconds);
         updatingSeek=true;seek.setProgress(duration==0?10000:(int)(seconds/duration*10000));updatingSeek=false;
-        clock.setText(getString(R.string.preview_time,time(seconds),time(duration)));
+        int completed=document.toolpath.completedSegments(seconds);
+        float[] head=document.toolpath.headAt(seconds);
+        String motion=completed==simulationExtrusion.length?getString(R.string.complete):
+            getString(simulationExtrusion[completed]?R.string.extrusion:R.string.travel_wait);
+        clock.setText(getString(R.string.preview_display,getString(R.string.preview_time,time(seconds),time(duration)),
+            getString(R.string.preview_position,Math.min(completed+1,simulationExtrusion.length),simulationExtrusion.length,motion,head[0],head[1],head[2])));
     }
     private static String time(double value) { long s=(long)value;return String.format(Locale.US,"%d:%02d:%02d",s/3600,(s/60)%60,s%60); }
-    private void pause() { playing=false;handler.removeCallbacks(tick);if(play!=null) play.setText(R.string.play); }
+    private void pause() { playing=false;handler.removeCallbacks(tick);if(play!=null) play.setText(R.string.simulate); }
     private void options() {
         String[] choices={"Default background color","Default model color","Ground grid: "+(prefs.getBoolean("grid",true)?"on":"off"),"Travel moves: "+(prefs.getBoolean("travel",true)?"on":"off"),"Open sample STL","Open sample G-code","Details","Restore default colors"};
         new AlertDialog.Builder(this).setTitle("InfiniMesh").setItems(choices,(d,index)-> {
@@ -225,6 +293,6 @@ public final class MeshActivity extends Activity {
     private void error(String message) { if(!isFinishing()&&!destroyed) new AlertDialog.Builder(this).setTitle("Unable to open model").setMessage(message==null?"The model could not be loaded.":message).setPositiveButton("OK",null).show(); }
     @Override protected void onResume() { super.onResume();viewer.onResume(); }
     @Override protected void onPause() { pause();viewer.onPause();super.onPause(); }
-    @Override protected void onSaveInstanceState(Bundle out) { super.onSaveInstanceState(out);out.putString("location",location);out.putDouble("seconds",seconds); }
+    @Override protected void onSaveInstanceState(Bundle out) { super.onSaveInstanceState(out);if(source!=null) source.save(out);out.putDouble("seconds",seconds); }
     @Override protected void onDestroy() { destroyed=true;++generation;if(pending!=null) pending.cancel(true);loader.shutdownNow();handler.removeCallbacksAndMessages(null);super.onDestroy(); }
 }

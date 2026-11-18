@@ -10,3 +10,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "InfiniMesh"
 includeBuild("libraries/libinfinemesh")
+includeBuild("libraries/libinfiniselect")

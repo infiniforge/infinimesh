@@ -18,5 +18,5 @@ if [ -n "${TERMUX_VERSION:-}" ]; then
 fi
 git submodule update --init --recursive
 python3 scripts/check-dependencies.py
-./gradlew assembleDebug lintDebug :libinfinemesh:mesh-core:test "$@"
+./gradlew assembleDebug lintDebug :libinfinemesh:mesh-core:test :libinfinemesh:mesh-android:testDebugUnitTest :libinfiniselect:select-android:testDebugUnitTest "$@"
 cp build/outputs/apk/debug/*.apk InfiniMesh-debug.apk
