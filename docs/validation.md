@@ -7,6 +7,9 @@ Checked 2026-11-18 on the same toolchain below.
 - Debug APK assembly and app lint passed (zero errors; advisory warnings for the
   target SDK, pinned AGP and intentionally retained suite foreground resources).
 - 25 JVM tests passed: 17 mesh/STL/G-code, 3 camera/depth and 5 selection-contract.
+- A fresh public recursive clone at app `f869b6f`, mesh `21df32c`, and selector
+  `bef55c7` passed `./build.sh --offline --max-workers=1 --console=plain` with
+  all 133 tasks executed, including APK assembly, app lint and all 25 tests.
 - Mesh library AAR and its lint passed. Standalone libinfiniselect tests passed;
   its separate lint task reports two pre-existing WrongConstant diagnostics in
   persistable-grant calls. The pinned library source was not modified.
